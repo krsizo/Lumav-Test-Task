@@ -1,0 +1,40 @@
+2.1
+____
+
+create table User(id integer AUTO_INCREMENT PRIMARY KEY, name varchar(100));
+insert into User(name) values( 'Kasutaja1');
+insert into User(name) values('Kasutaja2');
+insert into User(name) values('Kasutaja3');
+
+select * from User;
+
+create table Task(id integer AUTO_INCREMENT PRIMARY KEY, user_id integer, content varchar(100), FOREIGN KEY (user_id) REFERENCES User(id));
+insert into Task(user_id, content) values(1, 'Task1');
+insert into Task(user_id, content) values(2, 'Task2');
+insert into Task(user_id, content) values(2, 'Task3');
+insert into Task(user_id, content) values(2, 'Task4');
+insert into Task(user_id, content) values(3, 'Task5');
+
+select * from Task;
+
+
+2.2
+____
+
+ALTER TABLE User
+ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+ALTER TABLE Task
+ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ADD COLUMN updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+
+2.3
+____
+
+select name AS 'user_name', GROUP_CONCAT(content) AS 'user_tasks'
+FROM user, task WHERE user.id = task.user_id GROUP BY name
+
+
+
